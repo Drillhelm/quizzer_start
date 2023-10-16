@@ -31,7 +31,8 @@ export const Quizzer = () => {
     }
 
     function addQuiz(title: string, body: string) {
-        setQuizzes([...quizzes, newQuiz]);
+        const maxValues = Math.max(...quizzes.map((q: Quiz): number => q.id))
+        setQuizzes([...quizzes, {id: maxValues + 1,title: title, body: body, published: false, questionList: []}]);
     }
 
     function deleteQuiz(qId: number) {
