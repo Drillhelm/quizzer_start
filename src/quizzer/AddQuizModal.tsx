@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+//import { Body } from "react-bootstrap/lib/Media";
 
 export const AddQuizModal = ({
     show,
     handleClose,
     addQuiz
-}: {
-}) => {
+}: {show: boolean, handleClose: () => void, addQuiz: (title: string, body: string)=> void}) => {
+    const [body, setBody] = useState<string>("Example Description")
     const [title, setTitle] = useState<string>("Example Quiz");
 
     const saveChanges = () => {
@@ -36,7 +37,9 @@ export const AddQuizModal = ({
                             as="textarea"
                             rows={3}
                             value={body}
-                            onChange={}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => setBody(e.target.value)}
                         ></Form.Control>
                     </Form.Group>
                 </Modal.Body>

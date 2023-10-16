@@ -12,27 +12,29 @@ export const QuizEdit = ({
     deleteQuiz,
     switchEdit,
     resetView
-}: {) => {
+}: {quiz: Quiz, editQuiz: (questionId: number, newQuestion: Quiz) => void, deleteQuiz: (quizId: number) => void, switchEdit: () => void, resetView: () => void}) => {
     const [newQuiz, setNewQuiz] = useState<Quiz>({ ...quiz });
 
     const editQuestion = (questionId: number, newQuestion: Question) => {
         setNewQuiz({
             ...newQuiz,
-            questionList: newQuiz.questionList.map(
-            )
+            questionList: newQuiz.questionList.map((question: Question): Question => (
+                question.id === questionId ? { ...newQuestion }: { ...question }
+            ))
         });
     };
 
     const removeQuestion = (questionId: number) => {
         setNewQuiz({
             ...newQuiz,
-            questionList: newQuiz.questionList.filter(
-            )
+            questionList: newQuiz.questionList.filter((question: Question) => question.id === questionId)
         });
     };
 
     const saveChanges = () => {
-        editQuiz(quiz.id, { ...newQuiz });
+        editQuiz(quiz.id, {
+            ...newQuiz
+        });
     };
 
     const swapQuestion = (idx1: number, idx2: number) => {
@@ -42,7 +44,9 @@ export const QuizEdit = ({
                 (q: Question, idx: number): Question => {
                     if (idx === idx1) return newQuiz.questionList[idx2];
                     if (idx === idx2) return newQuiz.questionList[idx1];
-                    return;
+                    else {
+                        return q;
+                    }
                 }
             )
         });
@@ -79,7 +83,7 @@ export const QuizEdit = ({
                             ) => {
                                 setNewQuiz({
                                     ...newQuiz,
-                                    published: 
+                                    published: newQuiz.published
                                 });
                             }}
                         ></Form.Check>
